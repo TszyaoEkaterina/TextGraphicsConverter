@@ -13,14 +13,18 @@ public class Converter implements TextGraphicsConverter {
     private int maxHeight;
     private double maxRatio;
     private TextColorSchema schema = new Schema();
-    
+
     @Override
     public String convert(String url) throws IOException, BadImageSizeException {
         BufferedImage img = ImageIO.read(new URL(url));
         int width = img.getWidth();
         int height = img.getHeight();
-        if (width > height * maxRatio && maxRatio != 0.0) {
-            throw new BadImageSizeException(width / height, maxRatio);
+        double ratio = width / height;
+        if ((height / width) > ratio) {
+            ratio = height / width;
+        }
+        if ((ratio > maxRatio) && maxRatio != 0.0) {
+            throw new BadImageSizeException(ratio, maxRatio);
         }
         int newWidth = width;
         int newHeight = height;
@@ -62,19 +66,19 @@ public class Converter implements TextGraphicsConverter {
 
         return String.valueOf(res);
     }
-    
+
     public void setMaxWidth(int width) {
         this.maxWidth = width;
     }
-    
+
     public void setMaxHeight(int height) {
         this.maxHeight = height;
     }
-    
+
     public void setMaxRatio(double maxRatio) {
         this.maxRatio = maxRatio;
     }
-    
+
     public void setTextColorSchema(TextColorSchema schema) {
         this.schema = schema;
     }
