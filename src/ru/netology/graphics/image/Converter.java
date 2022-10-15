@@ -10,17 +10,15 @@ import java.net.URL;
 
 public class Converter implements TextGraphicsConverter {
     private int maxWidth;
-    private int width;
     private int maxHeight;
-    private int height;
     private double maxRatio;
     private TextColorSchema schema = new Schema();
     
     @Override
     public String convert(String url) throws IOException, BadImageSizeException {
         BufferedImage img = ImageIO.read(new URL(url));
-        width = img.getWidth();
-        height = img.getHeight();
+        int width = img.getWidth();
+        int height = img.getHeight();
         if (width > height * maxRatio && maxRatio != 0.0) {
             throw new BadImageSizeException(width / height, maxRatio);
         }
@@ -53,15 +51,16 @@ public class Converter implements TextGraphicsConverter {
                 resChars[h][w] = c;
             }
         }
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (int h = 0; h < newHeight; h++) {
             for (int w = 0; w < newWidth; w++) {
-                res += resChars[h][w];
-                res += resChars[h][w];
+                res.append(resChars[h][w]);
+                res.append(resChars[h][w]);
             }
-            res += "\n";
+            res.append("\n");
         }
-        return res;
+
+        return String.valueOf(res);
     }
     
     public void setMaxWidth(int width) {
