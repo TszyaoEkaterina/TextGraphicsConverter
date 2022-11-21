@@ -13,7 +13,7 @@ public class Main {
 
         GServer server = new GServer(converter); // Создаём объект сервера
         server.start(); // Запускаем
-        
+
 //        String url = "https://i.ibb.co/6DYM05G/edu0.jpg";
 //        converter.setMaxHeight(256);
 //        String imgTxt = converter.convert(url);

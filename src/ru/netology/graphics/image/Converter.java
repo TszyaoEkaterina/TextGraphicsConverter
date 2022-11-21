@@ -19,9 +19,11 @@ public class Converter implements TextGraphicsConverter {
         BufferedImage img = ImageIO.read(new URL(url));
         int width = img.getWidth();
         int height = img.getHeight();
-        double ratio = width / height;
-        if ((height / width) > ratio) {
+        double ratio;
+        if ((height / width) > (width / height)) {
             ratio = height / width;
+        } else {
+            ratio = width / height;
         }
         if ((ratio > maxRatio) && maxRatio != 0.0) {
             throw new BadImageSizeException(ratio, maxRatio);
